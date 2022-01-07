@@ -1,0 +1,438 @@
+CREATE TABLE Drivers (
+id INTEGER, 
+Firstname TEXT, 
+Name TEXT, 
+Age INTEGER, 
+Address TEXT,
+Date_permit_obtained DATETIME, 
+Number_of_accidents INTEGER, 
+Average_score REAL
+);
+
+-- insert some values
+INSERT INTO Drivers
+
+(id, Firstname, Name, Age, Address, Date_permit_obtained, Number_of_accidents, Average_score)
+
+VALUES
+
+(1, 'Matthieu', 'Paillet', 40, '18 Rue Henri Farman', '1986-12-10', '3', '4.5'),
+(2, 'Vincent', 'Jourdain', 35, '10 Av. de la Devèze', '1990-10-08', '12', '4.2'),
+(3, 'Mathias', 'Becat', 33, '22 Rue Charles Richet', '1987-12-10', '09', '4.5'),
+(4, 'Thomas', 'Larrieux', 25, '45 Av. Joseph Lazare', '1991-08-15', '06', '4.6'),
+(5, 'Sébastien', 'Dominguez', 28, '36 Bd Yves du Manoir', '1992-05-25', '15', '3.9');
+
+
+CREATE TABLE Users 
+(id INTEGER, 
+Firstname TEXT, 
+Name TEXT, 
+Age INTEGER, 
+Average_score REAL);
+
+INSERT INTO Users
+(id, Firstname, Name, Age, Average_score)
+VALUES
+(1, "Juan", "Carlos", 26, 4.9),
+(2, "Fernando", "Carlos", 29, 4.8),
+(3, "Alice", "Smith", 36, 4.7),
+(4, "Rachel", "Koik", 25, 4.9),
+(5, "Jane", "Juy", 18, 4.9);
+
+CREATE TABLE Employees 
+(id INTEGER, 
+Firstname TEXT, 
+Name TEXT, 
+Number_of_years_of_experience INTEGER, 
+Number_of_kilometres_used_at_Chauffeurs REAL);
+
+INSERT INTO Employees
+
+(id, Firstname, Name, Number_of_years_of_experience, Number_of_kilometres_used_at_Chauffeurs)
+
+VALUES
+(1, "Sang", "Bui", 26, 4.9),
+(2, "Patrick", "Miller", 29, 4.8),
+(3, "Nick", "Schmidt", 36, 4.7),
+(4, "Jessica", "Day", 25, 4.9),
+(5, "Winston", "Churchill", 18, 4.9);
+
+CREATE TABLE Cities 
+(id INTEGER, 
+Name TEXT,
+Size REAL, 
+Number_of_inhabitants REALN);
+
+
+INSERT INTO Cities
+(id, Name, Size, Number_of_inhabitants)
+VALUES
+(1, "San Francisco", 50, 4.9),
+(2, "Los Angeles", 88, 4.8),
+(3, "New York", 36, 4.7),
+(4, "Santa Monica", 25, 4.9),
+(5, "Orange County", 18, 4.9);
+
+ALTER TABLE Cities ADD COLUMN Number_of_cars INTEGER;
+
+DELETE FROM Employees WHERE id = 5;
+
+Database changed
+mysql> CREATE TABLE Drivers (
+    -> id INTEGER,
+    -> Firstname TEXT,
+    -> Name TEXT,
+    -> Age INTEGER,
+    -> Address TEXT,
+    -> Date_permit_obtained DATETIME,
+    -> Number_of_accidents INTEGER,
+    -> Average_score REAL
+    -> );
+ERROR 1050 (42S01): Table 'Drivers' already exists
+mysql> DROP TABLE Drivers;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE Drivers (
+    -> id INTEGER,
+    -> Firstname TEXT,
+    -> Name TEXT,
+    -> Age INTEGER,
+    -> Address TEXT,
+    -> Date_permit_obtained DATETIME,
+    -> Number_of_accidents INTEGER,
+    -> Average_score REAL
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO Drivers
+    ->
+    -> (id, Firstname, Name, Age, Address, Date_permit_obtained, Number_of_accidents, Average_score)
+    ->
+    -> VALUES
+    ->
+    -> (1, 'Matthieu', 'Paillet', 40, '18 Rue Henri Farman', '1986-12-10', '3', '4.5'),
+    -> (2, 'Vincent', 'Jourdain', 35, '10 Av. de la Devèze', '1990-15-08', '12', '4.2'),
+    -> (3, 'Mathias', 'Becat', 33, '22 Rue Charles Richet', '1987-12-10', '09', '4.5'),
+    -> (4, 'Thomas', 'Larrieux', 25, '45 Av. Joseph Lazare', '1991-08-15', '06', '4.6'),
+    -> (5, 'Sébastien', 'Dominguez', 28, '36 Bd Yves du Manoir', '1992-05-25', '15', '3.9');
+ERROR 1292 (22007): Incorrect datetime value: '1990-15-08' for column 'Date_permit_obtained' at row 2
+mysql> INSERT INTO Drivers
+    ->
+    -> (id, Firstname, Name, Age, Address, Date_permit_obtained, Number_of_accidents, Average_score)
+    ->
+    -> VALUES
+    ->
+    -> (1, 'Matthieu', 'Paillet', 40, '18 Rue Henri Farman', '1986-12-10', '3', '4.5'),
+    -> (2, 'Vincent', 'Jourdain', 35, '10 Av. de la Devèze', '1990-10-08', '12', '4.2'),
+    -> (3, 'Mathias', 'Becat', 33, '22 Rue Charles Richet', '1987-12-10', '09', '4.5'),
+    -> (4, 'Thomas', 'Larrieux', 25, '45 Av. Joseph Lazare', '1991-08-15', '06', '4.6'),
+    -> (5, 'Sébastien', 'Dominguez', 28, '36 Bd Yves du Manoir', '1992-05-25', '15', '3.9');
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Drivers;
++------+------------+-----------+------+-----------------------+----------------------+---------------------+---------------+
+| id   | Firstname  | Name      | Age  | Address               | Date_permit_obtained | Number_of_accidents | Average_score |
++------+------------+-----------+------+-----------------------+----------------------+---------------------+---------------+
+|    1 | Matthieu   | Paillet   |   40 | 18 Rue Henri Farman   | 1986-12-10 00:00:00  |                   3 |           4.5 |
+|    2 | Vincent    | Jourdain  |   35 | 10 Av. de la Devèze   | 1990-10-08 00:00:00  |                  12 |           4.2 |
+|    3 | Mathias    | Becat     |   33 | 22 Rue Charles Richet | 1987-12-10 00:00:00  |                   9 |           4.5 |
+|    4 | Thomas     | Larrieux  |   25 | 45 Av. Joseph Lazare  | 1991-08-15 00:00:00  |                   6 |           4.6 |
+|    5 | Sébastien  | Dominguez |   28 | 36 Bd Yves du Manoir  | 1992-05-25 00:00:00  |                  15 |           3.9 |
++------+------------+-----------+------+-----------------------+----------------------+---------------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Users
+    -> (id INTEGER,
+    -> Firstname TEXT,
+    -> Name TEXT,
+    -> Age INTEGER,
+    -> Average_score REAL);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Users
+    -> (id, Firstname, Name, Age, Average_score)
+    -> VALUES
+    -> (1, "Juan", "Carlos", 26, 4.9),
+    -> (2, "Fernando", "Carlos", 29, 4.8),
+    -> (3, "Alice", "Smith", 36, 4.7),
+    -> (4, "Rachel", "Koik", 25, 4.9),
+    -> (5, "Jane", "Juy", 18, 4.9);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Users;+------+-----------+--------+------+---------------+| id   | Firstname | Name   | Age  | Average_score |
++------+-----------+--------+------+---------------+
+|    1 | Juan      | Carlos |   26 |           4.9 |
+|    2 | Fernando  | Carlos |   29 |           4.8 |
+|    3 | Alice     | Smith  |   36 |           4.7 |
+|    4 | Rachel    | Koik   |   25 |           4.9 |
+|    5 | Jane      | Juy    |   18 |           4.9 |
++------+-----------+--------+------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Employees
+    -> (id INTEGER,
+    -> Firstname TEXT,
+    -> Name TEXT,
+    -> Number_of_years_of_experience INTEGER,
+    -> Number_of_kilometres_used_at_Chauffeurs REAL);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Employees
+    ->
+    -> (id, Firstname, Name, Number_of_years_of_experience, Number_of_kilometres_used_at_Chauffeurs)
+    ->
+    -> VALUES
+    -> (1, "Sang", "Bui", 26, 4.9),
+    -> (2, "Patrick", "Miller", 29, 4.8),
+    -> (3, "Nick", "Schmidt", 36, 4.7),
+    -> (4, "Jessica", "Day", 25, 4.9),
+    -> (5, "Winston", "Churchill", 18, 4.9);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Employees;+------+-----------+-----------+-------------------------------+-----------------------------------------+
+| id   | Firstname | Name      | Number_of_years_of_experience | Number_of_kilometres_used_at_Chauffeurs |
++------+-----------+-----------+-------------------------------+-----------------------------------------+
+|    1 | Sang      | Bui       |                            26 |                                     4.9 |
+|    2 | Patrick   | Miller    |                            29 |                                     4.8 |
+|    3 | Nick      | Schmidt   |                            36 |                                     4.7 |
+|    4 | Jessica   | Day       |                            25 |                                     4.9 |
+|    5 | Winston   | Churchill |                            18 |                                     4.9 |
++------+-----------+-----------+-------------------------------+-----------------------------------------+
+5 rows in set (0.01 sec)
+
+mysql> CREATE TABLE Cities
+    -> (id INTEGER,
+    -> Name TEXT,
+    -> Size TEXT,
+    -> Number_of_inhabitants INTEGER);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Cities
+    -> (id, Name, Size, Number_of_inhabitants)
+    -> VALUES
+    -> (1, "San Francisco", 50, 4.9),
+    -> (2, "Los Angeles", 88, 4.8),
+    -> (3, "New York", 36, 4.7),
+    -> (4, "Santa Monica", 25, 4.9),
+    -> (5, "Orange County", 18, 4.9);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Cities;+------+---------------+------+-----------------------+
+| id   | Name          | Size | Number_of_inhabitants |
++------+---------------+------+-----------------------+
+|    1 | San Francisco | 50   |                     5 |
+|    2 | Los Angeles   | 88   |                     5 |
+|    3 | New York      | 36   |                     5 |
+|    4 | Santa Monica  | 25   |                     5 |
+|    5 | Orange County | 18   |                     5 |
++------+---------------+------+-----------------------+
+5 rows in set (0.00 sec)
+
+mysql> drop table Cities;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE Cities
+    -> (id INTEGER,
+    -> Name TEXT,
+    -> Size REAL,
+    -> Number_of_inhabitants REAL);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO Cities
+    -> (id, Name, Size, Number_of_inhabitants)
+    -> VALUES
+    -> (1, "San Francisco", 50, 4.9),
+    -> (2, "Los Angeles", 88, 4.8),
+    -> (3, "New York", 36, 4.7),
+    -> (4, "Santa Monica", 25, 4.9),
+    -> (5, "Orange County", 18, 4.9);
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Cities;                                                                                                                                                                    | id   | Name          | Size | Number_of_inhabitants |
++------+---------------+------+-----------------------+
+|    1 | San Francisco |   50 |                   4.9 |
+|    2 | Los Angeles   |   88 |                   4.8 |
+|    3 | New York      |   36 |                   4.7 |
+|    4 | Santa Monica  |   25 |                   4.9 |
+|    5 | Orange County |   18 |                   4.9 |
++------+---------------+------+-----------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT Number_of_accidents FROM Drivers;
++---------------------+
+| Number_of_accidents |
++---------------------+
+|                   3 |
+|                  12 |
+|                   9 |
+|                   6 |
+|                  15 |
++---------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT Date_permit_obtained FROM Drivers;                                                                                                                                                
++----------------------+
+| Date_permit_obtained |
++----------------------+
+| 1986-12-10 00:00:00  |
+| 1990-10-08 00:00:00  |
+| 1987-12-10 00:00:00  |
+| 1991-08-15 00:00:00  |
+| 1992-05-25 00:00:00  |
++----------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT Average_score FROM Users;
++---------------+
+| Average_score |
++---------------+
+|           4.9 |
+|           4.8 |
+|           4.7 |
+|           4.9 |
+|           4.9 |
++---------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT Number_of_kilometres_used_at_Chauffeurs FROM Employees;
++-----------------------------------------+
+| Number_of_kilometres_used_at_Chauffeurs |
++-----------------------------------------+
+|                                     4.9 |
+|                                     4.8 |
+|                                     4.7 |
+|                                     4.9 |
+|                                     4.9 |
++-----------------------------------------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT Size FROM Cities;
++------+
+| Size |
++------+
+|   50 |
+|   88 |
+|   36 |
+|   25 |
+|   18 |
++------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE Drivers SET Age = 28 WHERE id = 28;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> SELECT * FROM Drivers;
++------+------------+-----------+------+-----------------------+----------------------+---------------------+---------------+
+| id   | Firstname  | Name      | Age  | Address               | Date_permit_obtained | Number_of_accidents | Average_score |
++------+------------+-----------+------+-----------------------+----------------------+---------------------+---------------+
+|    1 | Matthieu   | Paillet   |   40 | 18 Rue Henri Farman   | 1986-12-10 00:00:00  |                   3 |           4.5 |
+|    2 | Vincent    | Jourdain  |   35 | 10 Av. de la Devèze   | 1990-10-08 00:00:00  |                  12 |           4.2 |
+|    3 | Mathias    | Becat     |   33 | 22 Rue Charles Richet | 1987-12-10 00:00:00  |                   9 |           4.5 |
+|    4 | Thomas     | Larrieux  |   25 | 45 Av. Joseph Lazare  | 1991-08-15 00:00:00  |                   6 |           4.6 |
+|    5 | Sébastien  | Dominguez |   28 | 36 Bd Yves du Manoir  | 1992-05-25 00:00:00  |                  15 |           3.9 |
++------+------------+-----------+------+-----------------------+----------------------+---------------------+---------------+
+5 rows in set (0.01 sec)
+
+mysql> UPDATE Drivers SET Age = 28 WHERE id = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Drivers;
++------+------------+-----------+------+-----------------------+----------------------+---------------------+---------------+
+| id   | Firstname  | Name      | Age  | Address               | Date_permit_obtained | Number_of_accidents | Average_score |
++------+------------+-----------+------+-----------------------+----------------------+---------------------+---------------+
+|    1 | Matthieu   | Paillet   |   28 | 18 Rue Henri Farman   | 1986-12-10 00:00:00  |                   3 |           4.5 |
+|    2 | Vincent    | Jourdain  |   35 | 10 Av. de la Devèze   | 1990-10-08 00:00:00  |                  12 |           4.2 |
+|    3 | Mathias    | Becat     |   33 | 22 Rue Charles Richet | 1987-12-10 00:00:00  |                   9 |           4.5 |
+|    4 | Thomas     | Larrieux  |   25 | 45 Av. Joseph Lazare  | 1991-08-15 00:00:00  |                   6 |           4.6 |
+|    5 | Sébastien  | Dominguez |   28 | 36 Bd Yves du Manoir  | 1992-05-25 00:00:00  |                  15 |           3.9 |
++------+------------+-----------+------+-----------------------+----------------------+---------------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE Drivers SET Firstname = "John" WHERE id = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Drivers;
++------+------------+-----------+------+-----------------------+----------------------+---------------------+---------------+
+| id   | Firstname  | Name      | Age  | Address               | Date_permit_obtained | Number_of_accidents | Average_score |
++------+------------+-----------+------+-----------------------+----------------------+---------------------+---------------+
+|    1 | John       | Paillet   |   28 | 18 Rue Henri Farman   | 1986-12-10 00:00:00  |                   3 |           4.5 |
+|    2 | Vincent    | Jourdain  |   35 | 10 Av. de la Devèze   | 1990-10-08 00:00:00  |                  12 |           4.2 |
+|    3 | Mathias    | Becat     |   33 | 22 Rue Charles Richet | 1987-12-10 00:00:00  |                   9 |           4.5 |
+|    4 | Thomas     | Larrieux  |   25 | 45 Av. Joseph Lazare  | 1991-08-15 00:00:00  |                   6 |           4.6 |
+|    5 | Sébastien  | Dominguez |   28 | 36 Bd Yves du Manoir  | 1992-05-25 00:00:00  |                  15 |           3.9 |
++------+------------+-----------+------+-----------------------+----------------------+---------------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE Employees SET Number_of_years_of_experience = 6 WHERE id = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Employees;
++------+-----------+-----------+-------------------------------+-----------------------------------------+
+| id   | Firstname | Name      | Number_of_years_of_experience | Number_of_kilometres_used_at_Chauffeurs |
++------+-----------+-----------+-------------------------------+-----------------------------------------+
+|    1 | Sang      | Bui       |                             6 |                                     4.9 |
+|    2 | Patrick   | Miller    |                            29 |                                     4.8 |
+|    3 | Nick      | Schmidt   |                            36 |                                     4.7 |
+|    4 | Jessica   | Day       |                            25 |                                     4.9 |
+|    5 | Winston   | Churchill |                            18 |                                     4.9 |
++------+-----------+-----------+-------------------------------+-----------------------------------------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE Cities SET Name = "Paris"  WHERE id = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Cities;
++------+---------------+------+-----------------------+
+| id   | Name          | Size | Number_of_inhabitants |
++------+---------------+------+-----------------------+
+|    1 | Paris         |   50 |                   4.9 |
+|    2 | Los Angeles   |   88 |                   4.8 |
+|    3 | New York      |   36 |                   4.7 |
+|    4 | Santa Monica  |   25 |                   4.9 |
+|    5 | Orange County |   18 |                   4.9 |
++------+---------------+------+-----------------------+
+5 rows in set (0.01 sec)
+
+mysql> ALTER TABLE Cities DROP COLUMN Number_of_cars;
+ERROR 1091 (42000): Can't DROP 'Number_of_cars'; check that column/key exists
+mysql> ALTER TABLE Cities ADD COLUMN Number_of_cars;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> ALTER TABLE Cities ADD COLUMN Number_of_cars INTEGER;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Cities;
++------+---------------+------+-----------------------+----------------+
+| id   | Name          | Size | Number_of_inhabitants | Number_of_cars |
++------+---------------+------+-----------------------+----------------+
+|    1 | Paris         |   50 |                   4.9 |           NULL |
+|    2 | Los Angeles   |   88 |                   4.8 |           NULL |
+|    3 | New York      |   36 |                   4.7 |           NULL |
+|    4 | Santa Monica  |   25 |                   4.9 |           NULL |
+|    5 | Orange County |   18 |                   4.9 |           NULL |
++------+---------------+------+-----------------------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> DELETE FROM Employees WHERE id = 5;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Employees;
++------+-----------+---------+-------------------------------+-----------------------------------------+
+| id   | Firstname | Name    | Number_of_years_of_experience | Number_of_kilometres_used_at_Chauffeurs |
++------+-----------+---------+-------------------------------+-----------------------------------------+
+|    1 | Sang      | Bui     |                             6 |                                     4.9 |
+|    2 | Patrick   | Miller  |                            29 |                                     4.8 |
+|    3 | Nick      | Schmidt |                            36 |                                     4.7 |
+|    4 | Jessica   | Day     |                            25 |                                     4.9 |
++------+-----------+---------+-------------------------------+-----------------------------------------+
+4 rows in set (0.00 sec)

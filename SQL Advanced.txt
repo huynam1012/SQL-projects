@@ -1,0 +1,95 @@
+/*What is the top 5 companies that made the most profit in 2015?*/
+SELECT Ticker_Symbol, Net_income 
+FROM NYSE.indicators 
+WHERE For_Year = 2015.0 ORDER BY Net_Income DESC LIMIT 5;
+
+/*And cumulatively between 2013 and 2016?*/
+SELECT Ticker_Symbol, SUM(Net_income) AS Income
+FROM NYSE.indicators 
+WHERE For_Year BETWEEN 2013 AND 2016
+GROUP BY Ticker_Symbol
+ORDER BY Income DESC LIMIT 5;
+
+/*Which companies are less healthy? 
+We will calculate this by performing a ratio between assets (Total_Assets) and liabilities (Total_Liabilities). 
+We will also round the results to three decimal places.*/
+SELECT Ticker_Symbol, Round((Total_Assets/Total_Liabilities),3) AS ratio 
+FROM NYSE.indicators 
+ORDER BY ratio ASC LIMIT 1;
+
+/*What is Apple's average income between the years 2014 and 2016? 4.3907E10*/
+SELECT AVG(Net_income) AS Apple_revenue_moy 
+FROM (SELECT * FROM NYSE.companies AS companies
+INNER JOIN NYSE.indicators AS indicators
+ON companies.Ticker_Symbol = indicators.Ticker_Symbol WHERE Security LIKE '%Apple%')
+WHERE For_Year BETWEEN 2013.0 AND 2016.0;
+
+WITH Companies AS 
+(SELECT * FROM NYSE.companies AS companies
+INNER JOIN NYSE.indicators AS indicators
+ON companies.Ticker_Symbol = indicators.Ticker_Symbol WHERE Security LIKE '%Apple%')
+SELECT AVG(Net_Income) AS Apple_revenue_moy 
+FROM Companies;
+
+/*Which companies have the most after-tax income (Net_income) with long-term debt of less than $1,000,000? Wells Fargo*/
+SELECT Security, Net_income, Long_term_Debt FROM
+(SELECT * FROM NYSE.companies AS companies
+INNER JOIN NYSE.indicators AS indicators
+ON companies.Ticker_Symbol = indicators.Ticker_Symbol)
+WHERE Long_term_Debt < 1000000 ORDER BY Net_income DESC LIMIT 1;
+
+/*Which foreign films scored higher than the best American film?*/
+SELECT country, movie_title, imdb_score FROM IMDB.movies 
+WHERE imdb_score >(SELECT MAX(imdb_score) FROM IMDB.movies WHERE country = "USA")
+AND country != "USA"
+ORDER BY movie_title DESC;
+
+SELECT movie_title FROM IMDB.movies
+WHERE imdb_score > (  SELECT imdb_score FROM `IMDB.movies` 
+                      WHERE Country = "USA" 
+                      ORDER BY imdb_score 
+                      LIMIT 1 )
+                      
+AND Country != "USA"
+
+ORDER BY movie_title;
+
+/*Find out which day in the month had the most matches. 2009-04-11*/
+SELECT EXTRACT(day FROM date) as day, COUNT(*) as cnt
+FROM european_soccer.Match
+GROUP BY day
+ORDER BY cnt DESC LIMIT 1;
+
+SELECT EXTRACT(DATE FROM date) as date, COUNT(*) as cnt
+FROM european_soccer.Match
+GROUP BY date
+ORDER BY cnt DESC LIMIT 1;
+
+ 
+/*Find out which month in the year had the most matches.*/
+SELECT EXTRACT(month FROM date) as month, COUNT(*) as cnt
+FROM european_soccer.Match
+GROUP BY month
+ORDER BY cnt DESC LIMIT 1;
+
+/*Using JOIN, find the team with the most goals at home*/
+
+SELECT * FROM european_soccer.Match AS Match
+INNER JOIN european_soccer.Team AS Team
+ON Match.id = Team.id
+ORDER BY SUM(home_team_goal);
+
+/*Which company is making the most investment in 2016? Micron Technology*/
+SELECT Security, For_Year, Investments FROM
+(SELECT * FROM NYSE.companies AS companies
+INNER JOIN NYSE.indicators AS indicators
+ON companies.Ticker_Symbol = indicators.Ticker_Symbol)
+WHERE For_Year = 2016.0
+ORDER BY Investments DESC LIMIT 1;
+
+/*Is it the same company that has invested the most over all the years of our base? non, en 2014, Ford Mord est la plus investement*/
+SELECT Security, For_Year, Investments FROM
+(SELECT * FROM NYSE.companies AS companies
+INNER JOIN NYSE.indicators AS indicators
+ON companies.Ticker_Symbol = indicators.Ticker_Symbol)
+ORDER BY Investments DESC LIMIT 1;
