@@ -64,3 +64,10 @@ case
     then 'Other'
     else Current_Status
     end; 
+    
+SELECT *
+FROM covid19_clean_data
+INTO OUTFILE 'C:/temp/covid_clean_data1.csv'
+FIELDS TERMINATED BY ','
+ENCLOSED BY ''
+LINES TERMINATED BY '\n';
